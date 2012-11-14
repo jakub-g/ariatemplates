@@ -1,0 +1,47 @@
+# Explanation for Windows machines:
+#
+# - 'text' means:
+#    1) when sending the commit to the repo, always convert the sent diff to LF.
+#    2) when checking out (also when checking out older revision, switching branches):
+#       if core.autocrlf==true then write the whole file to disk as CRLF,
+        otherwise write whole file as LF.
+#
+# - It also means that if you have newline-only changes, you'll not see them in
+#   git diff (the file will be listed by git status, but diff will be empty;
+#   after adding this file via git add, it won't be listed by git status anymore).
+#   In case you have mixed newlines in the same file, you'll see a warning,
+#   but don't worry about it (see the next point).
+#
+# - For the files with LF or mixed CRLF/LF line endings from working dir, they
+#   will remain untouched *by Git itself* in the working dir. However, we have
+#   a *pre-commit hook* which removes trailing whitespace and normalizes newlines
+#   to CRLF using sed.
+#
+# - So using the combination of the two (this file + the hook), you'll always
+#   have CRLF in local working copy and LF in the repo (except for the files
+#   of which you change EOL yourself and don't commit them). You can however
+#   invoke the pre-commit hook at any time by issuing `git commit -a -m ""`
+#   (hook will fire, but commit will be abandoned due to empty message).
+#
+
+*.js text
+*.css text
+*.txt text
+*.tpl text
+*.tml text
+*.cml text
+*.json text
+*.htm text
+*.html text
+*.md text
+*.yml text
+*.yaml text
+
+*.gitignore text
+*.gitattributes text
+*.project text
+
+*.png binary
+*.gif binary
+*.swf binary
+*.jpg binary
