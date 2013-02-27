@@ -210,12 +210,6 @@
             this.id = id || "_gen_" + this._domId;
 
             /**
-             * CSS class for the section
-             * @type String
-             */
-            this.cssClass = cfg.cssClass;
-
-            /**
              * Configuration for keyboard shortcuts
              * @type Object
              */
@@ -812,9 +806,8 @@
                 if (this.domType) {
                     // if domType is empty, we do not output anything for the section
                     // (used in the tooltip)
-                    var cssClass = this.cssClass ? ' class="' + this.cssClass + '"' : '';
                     var attributeList = this.attributes ? aria.utils.Html.buildAttributeList(this.attributes) : '';
-                    var h = ['<', this.domType, attributeList, cssClass, ' id="', this._domId, '" ',
+                    var h = ['<', this.domType, attributeList, ' id="', this._domId, '" ',
                             aria.utils.Delegate.getMarkup(this.delegateId), '>'];
                     out.write(h.join(''));// opening the section
                 }

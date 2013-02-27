@@ -471,9 +471,9 @@
 
             _updateRemainingItems : function (beginIndex, updateIndex) {
                 var items = this.items;
-                var cssClassCb = this._childSections.cssClass;
-                if (!_isCallback(cssClassCb)) {
-                    cssClassCb = null;
+                var attributesCb = this._childSections.attributes;
+                if (!_isCallback(attributesCb)) {
+                    attributesCb = null;
                 }
                 for (var i = items.length - 1; i >= beginIndex; i--) {
                     var item = items[i];
@@ -482,14 +482,15 @@
                         jsonUtils.setValue(item, "index", i);
                     }
                     jsonUtils.setValue(item, "ct", i + 1);
-                    if (cssClassCb) {
+                    if (attributesCb) {
                         var section = this.getSectionById(item.sectionId);
-                        var oldCssClass = section.cssClass;
-                        var newCssClass = this.tplCtxt.evalCallback(cssClassCb, item);
+                        var oldCssClass = section.attributes.classList.join(' ');
+                        var newCssClassList = this.tplCtxt.evalCallback(attributesCb, item).classList;
+                        var newCssClass = newCssClassList.join(' ');
                         if (oldCssClass != newCssClass) {
                             var domElt = section.getDom();
                             domElt.className = newCssClass;
-                            section.cssClass = newCssClass;
+                            section.attributes.classList = newCssClassList;
                         }
                     }
                 }

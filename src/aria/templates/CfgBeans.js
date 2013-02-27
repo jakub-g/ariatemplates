@@ -794,10 +794,6 @@ Aria.beanDefinitions({
                     $type : "MacroCfg",
                     $description : "Macro to call to fill the section. It must not be defined if the section statement is used as a container."
                 },
-                "cssClass" : {
-                    $type : "json:String",
-                    $description : "[DEPRECATED] Use classList inside attributes instead. CSS class or space separated classes to apply to the DOM element of the section."
-                },
                 "attributes" : {
                     $type : "HtmlAttribute",
                     $description : "Parameters to apply to the DOM element of the section."
