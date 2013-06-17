@@ -13,6 +13,7 @@ Aria.beanDefinitions({
     $package : "aria.html.beans.RadioButtonCfg",
     $description : "Configuration for RadioButton widget.",
     $namespaces : {
+    		"json" : "aria.core.JsonTypes",
         "base" : "aria.html.beans.ElementCfg",
         "common" : "aria.widgetLibs.CommonBeans"
     },
@@ -23,14 +24,18 @@ Aria.beanDefinitions({
             $properties : {
                 "name" : {
                     $type : "json:String",
-                    $description : "The radio button name. Each radio button with the same name will work as a radio buttons group"
+                    $description : "The radio button name. Radio buttons with the same name will form a radio button group."
+                },
+                "value" : {
+                    $type : "json:String",
+                    $description : "The value associated with the radio button."
                 },
                 "bind" : {
                     $type : "base:Properties.$properties.bind",
                     $properties : {
-                        "checked" : {
+                        "selectedValue" : {
                             $type : "common:BindingRef",
-                            $description : "Bi-directional binding. The text input's checked property is set in the bound object."
+                            $description : "Bi-directional binding."
                         }
                     }
                 }

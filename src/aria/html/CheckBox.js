@@ -38,7 +38,7 @@
             INVALID_USAGE : "Widget %1 can only be used as a %2."
         },
         $constructor : function(cfg, context, line) {
-            this.$cfgBean = "aria.html.beans.CheckBoxCfg.Properties";
+            this.$cfgBean = this.$cfgBean || "aria.html.beans.CheckBoxCfg.Properties";
 
             cfg.tagName = "input";
             cfg.attributes = cfg.attributes || {};

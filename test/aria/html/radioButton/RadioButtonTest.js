@@ -18,109 +18,150 @@ Aria.classDefinition({
     $extends : "aria.jsunit.WidgetTestCase",
     $dependencies : ["aria.html.RadioButton", "aria.utils.json", "aria.utils.FireDomEvent"],
     $prototype : {
-        testInitialValueFalse : function () {
+
+        testWithoutInitialValue : function () {
             var container = {};
 
-            var cfg = {
-                bind : {
-                    checked : {
-                        inside : container,
-                        to : "checkstate"
-                    }
+            var bindingConfig = {
+                selectedValue : {
+                    inside : container,
+                    to : "selectedValue"
                 }
             };
 
-            var widget = this.createAndInit("aria.html.RadioButton", cfg);
+            var cfg1 = {
+            		name : "group1",
+            		value : "a",
+                bind : bindingConfig
+            };
+            var cfg2 = {
+            		name : "group1",
+            		value : "b",
+                bind : bindingConfig
+            };
 
-            this.assertEquals(widget._domElt.checked, false, "Checked bound to initial false: " + widget._domElt.checked);
+            var widget1 = this.createAndInit("aria.html.RadioButton", cfg1);
+						var widget2 = this.createAndInit("aria.html.RadioButton", cfg2);
 
-            aria.utils.Json.setValue(container, "checkstate", true);
-            this.assertEquals(widget._domElt.checked, true, "Set checked to true: " + widget._domElt.checked);
+            this.assertEquals(widget1._domElt.checked, false, "Widget1's checked property should be initially %2 but was %1");
+            this.assertEquals(widget2._domElt.checked, false, "Widget2's checked property should be initially %2 but was %1");
 
-            widget.$dispose();
+            aria.utils.Json.setValue(container, "selectedValue", "b");
+
+            this.assertEquals(widget1._domElt.checked, false, "Widget1's checked property should be %2 but was %1");
+            this.assertEquals(widget2._domElt.checked, true, "Widget2's checked property should be %2 but was %1");
+
+            aria.utils.Json.setValue(container, "selectedValue", "c");
+
+            this.assertEquals(widget1._domElt.checked, false, "Widget1's checked property should be %2 but was %1");
+            this.assertEquals(widget2._domElt.checked, false, "Widget2's checked property should be %2 but was %1");
+
+            widget1.$dispose();
+            widget2.$dispose();
             this.outObj.clearAll();
         },
 
-        testInitialValueTrue : function () {
+        testWithInitialValue : function () {
             var container = {
-                checkstate : true
+            		"selectedValue" : "a"
             };
 
-            var cfg = {
-                bind : {
-                    checked : {
-                        inside : container,
-                        to : "checkstate"
-                    }
+            var bindingConfig = {
+                selectedValue : {
+                    inside : container,
+                    to : "selectedValue"
                 }
             };
 
-            var widget = this.createAndInit("aria.html.RadioButton", cfg);
+            var cfg1 = {
+            		name : "group1",
+            		value : "a",
+                bind : bindingConfig
+            };
+            var cfg2 = {
+            		name : "group1",
+            		value : "b",
+                bind : bindingConfig
+            };
 
-            this.assertEquals(widget._domElt.checked, true, "Checked bound to initial true: " + widget._domElt.checked);
+            var widget1 = this.createAndInit("aria.html.RadioButton", cfg1);
+						var widget2 = this.createAndInit("aria.html.RadioButton", cfg2);
 
-            aria.utils.Json.setValue(container, "checkstate", false);
-            this.assertEquals(widget._domElt.checked, false, "Set checked to false: " + widget._domElt.checked);
+            this.assertEquals(widget1._domElt.checked, true, "Widget1's checked property should be initially %2 but was %1");
+            this.assertEquals(widget2._domElt.checked, false, "Widget2's checked property should be initially %2 but was %1");
 
-            widget.$dispose();
+            aria.utils.Json.setValue(container, "selectedValue", "b");
+
+            this.assertEquals(widget1._domElt.checked, false, "Widget1's checked property should be %2 but was %1");
+            this.assertEquals(widget2._domElt.checked, true, "Widget2's checked property should be %2 but was %1");
+
+            widget1.$dispose();
+            widget2.$dispose();
             this.outObj.clearAll();
         },
-/*
+        /*
         testTransformFromWidget : function () {
             var container = {
-                checkstate : 'checked'
+            		"selectedValue" : "a"
             };
 
             var cfg = {
+            		name : "group1",
+            		value : "a",
                 bind : {
-                    checked : {
-                        inside : container,
-                        to : "checkstate",
-                        transform : {
-                            fromWidget : function(v) {
-                                return v ? 'checked' : 'not_checked';
+                	selectedValue : {
+                    inside : container,
+                    to : "selectedValue",
+                    transform : {
+                            fromWidget : function(value) {
+                                return value.toUpperCase();
                             },
-                            toWidget : function(v) {
-                                return v === 'checked';
+                            toWidget : function(value) {
+                                return value.toLowerCase();
                             }
                         }
-                    }
+                	}
                 }
             };
 
-            var widget = this.createAndInit("aria.html.CheckBox", cfg);
+
+            var widget = this.createAndInit("aria.html.RadioButton", cfg);
 
             this.assertEquals(widget._domElt.checked, true, "Transform to widget true: " + widget._domElt.checked);
 
-            aria.utils.Json.setValue(container, "checkstate", 'not_checked');
+            aria.utils.Json.setValue(container, "A", 'not_checked');
             this.assertEquals(widget._domElt.checked, false, "Transform to widget false: " + widget._domElt.value);
 
             widget.$dispose();
             this.outObj.clearAll();
-        },
+        },*/
 
         testReactOnClick : function () {
             var container = {};
 
             var cfg = {
+            		name : "group1",
+            		value : "a",
                 bind : {
-                    checked : {
-                        inside : container,
-                        to : "checkstate"
-                    }
+                	selectedValue : {
+                    inside : container,
+                    to : "selectedValue"
+                	}
                 }
             };
 
-            var widget = this.createAndInit("aria.html.CheckBox", cfg);
+            var widget = this.createAndInit("aria.html.RadioButton", cfg);
+
+            this.assertEquals(widget._domElt.checked, false, "Radio button should not have been checked before click");
 
             aria.utils.FireDomEvent.fireEvent("click", widget._domElt);
 
             this.assertEquals(widget._domElt.checked, true, "Check click on dom: " + widget._domElt.checked);
-            this.assertEquals(container.checkstate, true, "Check click on data: " + container.checkstate);
+            this.assertEquals(container.selectedValue, "a", "Check click on data: expected value was %2 but got %1.");
 
             widget.$dispose();
             this.outObj.clearAll();
         }
-*/
+
      }
 });
