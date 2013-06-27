@@ -11,7 +11,7 @@
   "main": "src/aria/node.js",
   "config": {
     "port": "8080",
-    "phantomjsInstances": 2
+    "phantomjsInstances": 4
   },
   "scripts": {
     "start": "node scripts/server.js",
