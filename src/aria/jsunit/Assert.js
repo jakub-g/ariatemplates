@@ -279,6 +279,9 @@
 
                             var err = logItem.objOrErr;
                             if (err) {
+                                if (err.logDetails) {
+                                    err.logDetails();
+                                }
                                 msg += "\n";
                                 msg += (err.name && err.message) ? (err.name + ": " + err.message) : err;
 

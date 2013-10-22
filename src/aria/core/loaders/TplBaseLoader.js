@@ -13,10 +13,18 @@
  * limitations under the License.
  */
 
-/**
- * With the migration to noder-js, this class is no longer supported.
- */
-Aria.classDefinition({
-    $classpath : 'aria.core.TmlClassLoader',
-    $extends : 'aria.core.ClassLoader'
-});
+// Creates a loader for a specific class generator
+var promise = require('noder-js/promise.js');
+var oldATLoader = require('./OldATLoader.js');
+
+module.exports = function (classGenerator) {
+    return function (module, content, url) {
+        var defer = promise();
+        classGenerator.parseTemplate(content, false, function (res) {
+            oldATLoader(module, res.classDef, url).then(defer.resolve, defer.reject);
+        }, {
+            "file_classpath" : module.filename
+        });
+        return defer.promise();
+    };
+};

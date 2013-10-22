@@ -26,6 +26,18 @@ module.exports = function (grunt) {
                     'build/grunt-config/*.js', 'build/*.js']
         },
         source : {
+            options : {
+                node : true,
+                "debug" : true, // FIXME: set it to false for production
+                "globals" : {
+                    "aria" : false,
+                    "Aria" : true, // allowing to override this global
+                    "setTimeout" : false,
+                    "setInterval" : false,
+                    "clearTimeout" : false,
+                    "clearInterval" : false
+                }
+            },
             src : ['src/aria/**/*.js',
                     // Using node.js globals
                     '!src/aria/node.js',
@@ -45,14 +57,14 @@ module.exports = function (grunt) {
             options : {
                 "unused" : false,
                 "globals" : {
-                    "aria": false,
-                    "Aria": false,
-                    "setTimeout": false,
-                    "setInterval": false,
-                    "clearTimeout": false,
-                    "clearInterval": false,
-                    "test": false,
-                    "Syn": false
+                    "aria" : false,
+                    "Aria" : false,
+                    "setTimeout" : false,
+                    "setInterval" : false,
+                    "clearTimeout" : false,
+                    "clearInterval" : false,
+                    "test" : false,
+                    "Syn" : false
                 }
             }
         },
