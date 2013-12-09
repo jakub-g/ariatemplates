@@ -72,9 +72,6 @@
         return new Constr();
     };
 
-    // define here some methods for JSLint.
-    var createModuleCtrl, createInstanceAndCheckFlow, createFlowCtrlAndCustomModules, attachListenersAndInit, callFinalCallback, getModulePrivateInfo, getModulePrivateInfoMethodRes, getModulePrivateInfoWithCheck, putElementAtRefPath, putSubModuleAtRefPath, subModuleLoaded, loadSubModules, reloadModuleCtrlCb;
-
     /**
      * Load a module controller. First check if module is available.
      * @param {Object} args loadModuleCtrl state information, which initially contains, or is progressively filled to
@@ -97,7 +94,7 @@
      * </ul>
      * @private
      */
-    createModuleCtrl = function (args) {
+    var createModuleCtrl = function (args) {
         var moduleCtrlConstr = Aria.getClassRef(args.desc.classpath);
         if (!moduleCtrlConstr) {
             // try to load the module controller
@@ -125,7 +122,7 @@
      * @param {Object} args loadModuleCtrl state information (see createModuleCtrl for more information)
      * @private
      */
-    createInstanceAndCheckFlow = function (args) {
+    var createInstanceAndCheckFlow = function (args) {
         try {
             var moduleClasspath = args.desc.classpath;
             var moduleCtrlConstr = args.moduleCtrlConstr;
@@ -189,7 +186,7 @@
      * @param {Object} args loadModuleCtrl state information (see createModuleCtrl for more information)
      * @private
      */
-    createFlowCtrlAndCustomModules = function (args) {
+    var createFlowCtrlAndCustomModules = function (args) {
         try {
 
             var moduleCtrlPrivate = args.moduleCtrlPrivate;
@@ -264,7 +261,7 @@
      * @param {Object} args loadModuleCtrl state information (see createModuleCtrl for more information)
      * @private
      */
-    attachListenersAndInit = function (unused, args) {
+    var attachListenersAndInit = function (unused, args) {
         try {
             var registerListeners = args.registerListeners;
             if (registerListeners) {
@@ -297,7 +294,7 @@
      * @param {Object} args loadModuleCtrl state information (see createModuleCtrl for more information)
      * @private
      */
-    callFinalCallback = function (unused, args) {
+    var callFinalCallback = function (unused, args) {
         this.$callback(args.cb, args.res);
     };
 
@@ -306,7 +303,7 @@
      * @param {Object} moduleCtrl module controller public interface wrapper or whole object
      * @private
      */
-    getModulePrivateInfo = function (moduleCtrl) {
+    var getModulePrivateInfo = function (moduleCtrl) {
         var k = moduleCtrl[MODULECTRL_ID_PROPERTY];
         var res = modulesPrivateInfo[k];
         if (!res) {
@@ -317,7 +314,7 @@
         }
         return res;
     };
-    getModulePrivateInfoMethodRes = getModulePrivateInfo;
+    var getModulePrivateInfoMethodRes = getModulePrivateInfo;
 
     /**
      * Return module private information linked to the module controller passed as a parameter. The parameter is checked
@@ -325,7 +322,7 @@
      * @param {Object} moduleCtrlPrivate module controller whole object
      * @private
      */
-    getModulePrivateInfoWithCheck = function (moduleCtrlPrivate, functionName) {
+    var getModulePrivateInfoWithCheck = function (moduleCtrlPrivate, functionName) {
         var res = getModulePrivateInfo(moduleCtrlPrivate);
         if (!res) {
             return null;
@@ -349,7 +346,7 @@
      * @param {Number} arrayIndex If specified, put the element in an array at the specified path
      * @return {Boolean} true if element already exists
      */
-    putElementAtRefPath = function (targetObject, element, pathArray, arrayIndex) {
+    var putElementAtRefPath = function (targetObject, element, pathArray, arrayIndex) {
         // if refpath contains multiple intermediate objects, let's create them
         var size = pathArray.length, name;
         for (var i = 0; i < size - 1; i++) {
@@ -393,7 +390,7 @@
      * @param {Boolean} customModule whether the sub-module is a custom module
      * @private
      */
-    putSubModuleAtRefPath = function (parentModule, subModuleDesc, subModuleCtrl, customModule) {
+    var putSubModuleAtRefPath = function (parentModule, subModuleDesc, subModuleCtrl, customModule) {
         var ref = subModuleDesc.refpath;
         var parentPrivate = parentModule.moduleCtrlPrivate;
         var parentData = parentModule.moduleCtrl.getData();
@@ -447,7 +444,7 @@
      * @param {Object} args
      * @private
      */
-    subModuleLoaded = function (subModule, args) {
+    var subModuleLoaded = function (subModule, args) {
         var common = args.common;
         var subModuleDesc = args.subModuleDesc;
         var subModuleCtrl = subModule.moduleCtrl;
@@ -485,7 +482,7 @@
      * one of these classpaths, loading this sub-module will fail.
      * @private
      */
-    loadSubModules = function (parentModuleInfo, subModulesDescArray, cb, customModules, recursionCheck) {
+    var loadSubModules = function (parentModuleInfo, subModulesDescArray, cb, customModules, recursionCheck) {
         var subModulesDescArrayLength = subModulesDescArray.length;
         if (subModulesDescArrayLength === 0) {
             this.$callback(cb, {
@@ -585,7 +582,7 @@
      * @param {Object} result of sub-module load. Contains a subModules array.
      * @paran {Object} args object containing objectLoading, oldModuleCtrl, oldFlowCtrl and callback
      */
-    reloadModuleCtrlCb = function (res, args) {
+    var reloadModuleCtrlCb = function (res, args) {
         var objectLoading = args.objectLoading;
         var newModuleCtrl = res.subModules[0];
         if (newModuleCtrl) {
