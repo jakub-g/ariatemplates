@@ -94,6 +94,19 @@ Aria.classDefinition({
         this.__cssUsage = {};
 
         /**
+         * Keep track of the number of classpath that are using a certain CSS template class in the application. It is
+         * used to manage when css can be invalidated.
+         * @type Object
+         *
+         * <pre>
+         * {cssClassPath : [classPath, ...] }
+         * </pre>
+         *
+         * @private
+         */
+        this.__globalUsage = {};
+
+        /**
          * Each CSS template class has it's own unique prefix, store the association between the CSS template class and
          * the prefix. The prefix is a CSS class
          * @type Object
@@ -730,19 +743,41 @@ Aria.classDefinition({
         },
 
         /**
-         * [Deprecated, do not use it anymore]
-         * @deprecated
+         * Register a link between a classpath and a CSSTemplate. This is used during CSS reload to identify if a CSS
+         * has to be reloaded.
+         * @param {String} classpath classpath that have a dependency on some css
+         * @param {Array} cssTemplates css classpaths or references
          */
-        registerDependencies : function () {
-            this.$logWarn(this.DEPRECATED_METHOD, ["registerDependencies"]);
+        registerDependencies : function (classpath, cssTemplates) {
+            for (var i = 0, length = cssTemplates.length; i < length; i++) {
+                var cssClasspath = getClasspath(cssTemplates[i]);
+                if (!this.__globalUsage[cssClasspath]) {
+                    this.__globalUsage[cssClasspath] = [];
+                }
+                this.__globalUsage[cssClasspath].push(classpath);
+            }
         },
 
         /**
-         * [Deprecated, do not use it anymore]
-         * @deprecated
+         * Unregister a link between a classpath and a CSSTemplate. This is used during CSS reload to identify if a CSS
+         * has to be reloaded.
+         * @param {String} classpath classpath that have a dependency on some css
+         * @param {Array} cssTemplates classpaths or references
+         * @param {Boolean} unload if true unload cssTemplate class as well and invalidate them
+         * @param {Boolean} timestampNextTime if unload is asked, will trigger browser cache bypass for next load
          */
-        unregisterDependencies : function () {
-            this.$logWarn(this.DEPRECATED_METHOD, ["unregisterDependencies"]);
+        unregisterDependencies : function (classpath, cssTemplates, unload, timestampNextTime) {
+            var array = aria.utils.Array, classMgr = aria.core.ClassMgr;
+            for (var i = 0, length = cssTemplates.length; i < length; i++) {
+                var cssClasspath = getClasspath(cssTemplates[i]);
+                var usage = this.__globalUsage[cssClasspath];
+                array.remove(usage, classpath);
+                if (unload) {
+                    classMgr.unloadClass(cssClasspath, timestampNextTime);
+                    // only invalidate if someone else is using it
+                    this.invalidate(cssClasspath, usage.length > 0);
+                }
+            }
         },
 
         /**

@@ -1360,6 +1360,10 @@ var Aria = module.exports = global.Aria;
             def.$onload.call(p, ns[clsName]);
         }
 
+        if (def.$css) {
+            aria.templates.CSSMgr.registerDependencies(def.$classpath, def.$css);
+        }
+
         return ns[clsName];
     };
 
@@ -1394,7 +1398,6 @@ var Aria = module.exports = global.Aria;
      *      }
      * }
      * </pre>
-     *
      *
      * If there is no need to specify the <code>scope</code> and <code>args</code>, the callbacks can be passed
      * directly as functions: e.g. <code>oncomplete: function () {...}</code> instead of

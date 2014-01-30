@@ -111,6 +111,15 @@ module.exports = Aria.classDefinition({
         unloadClass : function (classpath, timestampNextTime) {
             this.$logWarn(this.DEPRECATED_METHOD, ["unloadClass"]);
 
+            var classRef = Aria.getClassRef(classpath);
+            // no class ref for beans
+            if (classRef) {
+                var classDef = classRef.classDefinition;
+                if (classDef && classDef.$css) {
+                    aria.templates.CSSMgr.unregisterDependencies(classpath, classDef.$css, true, timestampNextTime);
+                }
+            }
+
             var resMgr = aria.core.ResMgr;
             if (resMgr) {
                 // if the classpath refers to a resource, make sure it is fully unloaded
