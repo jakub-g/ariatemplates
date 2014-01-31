@@ -816,7 +816,7 @@ var Aria = module.exports = global.Aria;
         if (array) {
             for (var i = 0, l = array.length; i < l; i++) {
                 var item = array[i];
-                if (typeof item == "string") {
+                if (typeof item == "string" && !(Aria.getClassRef(item))) {
                     // FIXME: typeof
                     var dependency = Aria.getLogicalPath(item, extension, true);
                     var cacheItem = require.cache[dependency];
