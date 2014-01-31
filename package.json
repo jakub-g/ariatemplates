@@ -23,7 +23,7 @@
     "test": "npm run-script lint && npm run-script grunt && npm run-script mocha && npm run-script attester"
   },
   "dependencies" : {
-    "noder-js": "1.2.0-rc0"
+    "noder-js": "1.2.0-rc1"
   },
   "devDependencies": {
     "at-noder-converter": "git+https://github.com/divdavem/at-noder-converter#master",
