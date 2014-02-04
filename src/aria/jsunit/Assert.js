@@ -611,8 +611,13 @@ var ariaUtilsJson = require("../utils/Json");
                     }
                     this._overriddenClasses[initialClass] = clsInfos;
                 }
+                // alter the global classpath to point to the mock
                 var ns = Aria.nspace(clsInfos.clsNs);
                 ns[clsInfos.clsName] = mockClass;
+
+                // also alter require cache
+                var cacheKey = initialClass.replace(/\./g,"/") + ".js";
+                require.cache[cacheKey].exports = mockClass;
             },
 
             /**
@@ -622,8 +627,15 @@ var ariaUtilsJson = require("../utils/Json");
                 if (this._overriddenClasses != null) {
                     for (var i in this._overriddenClasses) {
                         var clsInfos = this._overriddenClasses[i];
+
+                        // restore the global classpath to point to the original
                         var ns = Aria.nspace(clsInfos.clsNs);
                         ns[clsInfos.clsName] = clsInfos.initialClass;
+
+                        // also restore require cache
+                        var initialClasspath = clsInfos.clsNs + "." + clsInfos.clsName;
+                        var cacheKey = initialClasspath.replace(/\./g, "/") + ".js";
+                        require.cache[cacheKey].exports = clsInfos.initialClass;
                     }
                     this._overriddenClasses = null;
                 }
