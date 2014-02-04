@@ -589,6 +589,7 @@ var ariaUtilsJson = require("../utils/Json");
                 if (this._overriddenClasses == null) {
                     this._overriddenClasses = {};
                 }
+                var cacheKey = Aria.getLogicalPath(initialClass, ".js", true);
                 var clsInfos = this._overriddenClasses[initialClass];
                 if (clsInfos == null) { // only save the previous class if it was not already overridden
                     var currentClass = Aria.nspace(initialClass);
@@ -609,15 +610,30 @@ var ariaUtilsJson = require("../utils/Json");
                             initialClass : currentClass
                         };
                     }
+                    clsInfos.cachedModule = require.cache[cacheKey];
                     this._overriddenClasses[initialClass] = clsInfos;
                 }
+
                 // alter the global classpath to point to the mock
                 var ns = Aria.nspace(clsInfos.clsNs);
                 ns[clsInfos.clsName] = mockClass;
 
                 // also alter require cache
-                var cacheKey = initialClass.replace(/\./g,"/") + ".js";
-                require.cache[cacheKey].exports = mockClass;
+                delete require.cache[cacheKey];
+                var currentContext = require("noder-js/currentContext");
+                var modull;
+                if (currentContext) {
+                    modull = currentContext.getModule(cacheKey);
+                } else {
+                    modull = {
+                        id : cacheKey,
+                        filename : cacheKey
+                    };
+                    require.cache[cacheKey] = modull;
+                }
+                modull.exports = mockClass;
+                modull.loaded = true;
+                modull.preloaded = true;
             },
 
             /**
@@ -634,8 +650,8 @@ var ariaUtilsJson = require("../utils/Json");
 
                         // also restore require cache
                         var initialClasspath = clsInfos.clsNs + "." + clsInfos.clsName;
-                        var cacheKey = initialClasspath.replace(/\./g, "/") + ".js";
-                        require.cache[cacheKey].exports = clsInfos.initialClass;
+                        var cacheKey = Aria.getLogicalPath(initialClasspath, ".js", true);
+                        require.cache[cacheKey] = clsInfos.cachedModule;
                     }
                     this._overriddenClasses = null;
                 }
