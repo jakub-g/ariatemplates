@@ -12,6 +12,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+var Aria = require("../Aria");
+
 
 /**
  * List of active CSS templates loaded by Aria.loadTemplate
@@ -19,9 +21,8 @@
  * @extends aria.core.JsObject
  * @singleton
  */
-Aria.classDefinition({
+module.exports = Aria.classDefinition({
     $classpath : "aria.templates.CSSCtxtManager",
-    $dependencies : ["aria.templates.CSSCtxt"],
     $singleton : true,
     $constructor : function () {
         /**
@@ -46,7 +47,7 @@ Aria.classDefinition({
 
             // Create a context if missing
             if (!ctxt) {
-                ctxt = new aria.templates.CSSCtxt();
+                ctxt = new (require("./CSSCtxt"))();
 
                 // Override the classpath
                 if (!initArgs) {
