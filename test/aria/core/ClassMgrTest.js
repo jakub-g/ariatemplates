@@ -26,25 +26,25 @@ Aria.classDefinition({
         testAsyncMissingJS : function () {
             this._checkAriaLoadError({
                 classes : ["test.aria.core.test.ClassWhichDoesNotExist"]
-            }, "testAsyncMissingJS", aria.core.ClassLoader.CLASS_LOAD_FAILURE);
+            }, "testAsyncMissingJS", aria.core.MultiLoader.LOAD_ERROR);
         },
 
         testAsyncMissingTPL : function () {
             this._checkAriaLoadError({
                 templates : ["test.aria.core.test.TemplateWhichDoesNotExist"]
-            }, "testAsyncMissingTPL", aria.core.ClassLoader.CLASS_LOAD_FAILURE);
+            }, "testAsyncMissingTPL", aria.core.MultiLoader.LOAD_ERROR);
         },
 
         testAsyncJSClassWrongClasspath : function () {
             this._checkAriaLoadError({
                 classes : ["test.aria.core.test.JSWrongClasspath"]
-            }, "testAsyncJSClassWrongClasspath", aria.core.ClassLoader.MISSING_CLASS_DEFINITION);
+            }, "testAsyncJSClassWrongClasspath", aria.core.MultiLoader.LOAD_ERROR);
         },
 
         testAsyncTPLClassWrongClasspath : function () {
             this._checkAriaLoadError({
                 templates : ["test.aria.core.test.TPLWrongClasspath"]
-            }, "testAsyncTPLClassWrongClasspath", aria.core.ClassLoader.MISSING_CLASS_DEFINITION);
+            }, "testAsyncTPLClassWrongClasspath", aria.core.MultiLoader.LOAD_ERROR);
         },
 
         /**

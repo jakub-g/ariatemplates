@@ -23,6 +23,7 @@ Aria.classDefinition({
     },
     $statics : {
         NODER_MIGRATION : "With the migration to noder-js, this class is no longer supported.",
+        CLASS_LOAD_ERROR : aria.core.MultiLoader.LOAD_ERROR,
         CLASS_LOAD_FAILURE : aria.core.MultiLoader.LOAD_ERROR,
         MISSING_CLASS_DEFINITION : aria.core.MultiLoader.LOAD_ERROR
     }

@@ -56,7 +56,7 @@ Aria.classDefinition({
         _loadTemplateErrorsCallback : function (res) {
             try {
                 this.assertFalse(res.success);
-                this.assertErrorInLogs(aria.core.ClassLoader.CLASS_LOAD_ERROR);
+                this.assertErrorInLogs(aria.core.MultiLoader.LOAD_ERROR);
 
                 var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.BadResourcesScript");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_AVAILABLE, "Template script should be loaded before calling the callback");
@@ -151,7 +151,7 @@ Aria.classDefinition({
         _loadTemplateErrorsMultipleCallback : function (res) {
             try {
                 this.assertFalse(res.success);
-                this.assertErrorInLogs(aria.core.ClassLoader.CLASS_LOAD_ERROR);
+                this.assertErrorInLogs(aria.core.MultiLoader.LOAD_ERROR);
 
                 var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.BadResourcesScript");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_AVAILABLE, "Template script should be loaded before calling the callback");
