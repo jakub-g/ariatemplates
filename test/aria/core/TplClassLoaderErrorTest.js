@@ -58,7 +58,7 @@ Aria.classDefinition({
                 this.assertFalse(res.success);
                 this.assertErrorInLogs(aria.core.MultiLoader.LOAD_ERROR);
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.BadResourcesScript");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/BadResourcesScript.js");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_AVAILABLE, "Template script should be loaded before calling the callback");
             } catch (ex) {}
 
@@ -70,7 +70,7 @@ Aria.classDefinition({
          */
         testAsyncLoadInvalidDependencies : function () {
             // Inject an invalid item in the cache
-            var cacheItem = aria.core.Cache.getItem("classes", "invalidInCache", true);
+            var cacheItem = aria.core.Cache.getItem("files", "invalidInCache.js", true);
             cacheItem.status = aria.core.Cache.STATUS_ERROR;
 
             Aria.loadTemplate({
@@ -86,17 +86,17 @@ Aria.classDefinition({
             try {
                 this.assertFalse(res.success);
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.GoodDependency");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/GoodDependency.js");
                 this.assertFalse(!!cacheItem, "GoodDependency shouldn't be in cache");
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.InvalidCache");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/InvalidCache.tpl");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_ERROR, "Template should be in error");
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.GoodTemplate");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/GoodTemplate.tpl");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_AVAILABLE, "Good Template should be available");
             } catch (ex) {}
 
-            delete aria.core.Cache.content.classes.InvalidInCache;
+            delete aria.core.Cache.content.files['invalidInCache.js'];
 
             this.notifyTestEnd("testAsyncLoadInvalidDependencies");
         },
@@ -106,7 +106,7 @@ Aria.classDefinition({
          */
         testAsyncLoadInvalidDependenciesNoDependencies : function () {
             // Inject an invalid item in the cache
-            var cacheItem = aria.core.Cache.getItem("classes", "invalidInCache", true);
+            var cacheItem = aria.core.Cache.getItem("files", "invalidInCache.js", true);
             cacheItem.status = aria.core.Cache.STATUS_ERROR;
 
             Aria.loadTemplate({
@@ -122,14 +122,14 @@ Aria.classDefinition({
             try {
                 this.assertFalse(res.success);
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.GoodDependency");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/GoodDependency.js");
                 this.assertFalse(!!cacheItem, "GoodDependency shouldn't be in cache");
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.InvalidCacheNoDep");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/InvalidCacheNoDep.tpl");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_ERROR, "Template should be in error");
             } catch (ex) {}
 
-            delete aria.core.Cache.content.classes.InvalidCacheNoDep;
+            delete aria.core.Cache.content.files['invalidInCache.js'];
 
             this.notifyTestEnd("testAsyncLoadInvalidDependenciesNoDependencies");
         },
@@ -153,7 +153,7 @@ Aria.classDefinition({
                 this.assertFalse(res.success);
                 this.assertErrorInLogs(aria.core.MultiLoader.LOAD_ERROR);
 
-                var cacheItem = aria.core.Cache.getItem("classes", "test.aria.templates.test.error.BadResourcesScript");
+                var cacheItem = aria.core.Cache.getItem("files", "test/aria/templates/test/error/BadResourcesScript.js");
                 this.assertEquals(cacheItem.status, aria.core.Cache.STATUS_AVAILABLE, "Template script should be loaded before calling the callback");
             } catch (ex) {}
 
