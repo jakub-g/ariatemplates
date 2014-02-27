@@ -9,7 +9,7 @@ tests:
     - /aria/css/atskin.js
   classpaths:
    includes:
-    - test.MainTestSuite
+    - test.aria.utils.Date
    excludes:
    #Excluded because PhantomJS does not support flash:
     - test.aria.core.io.IOXDRTest
