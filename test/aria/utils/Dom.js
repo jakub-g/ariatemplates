@@ -545,9 +545,9 @@ Aria.classDefinition({
             document.body.removeChild(testElt);
         },
 
-        testGetElementsByClassName: function() {
+        testGetElementsByClassName : function () {
             var document = Aria.$window.document;
-            var testHtml = '<div id="main"> <span class="span_1 span_2"></span> <span class="span_1"></span> <span class="span_2"></span> <br/> <div> <div class="div_1"></div> <div class="div_1"></div> <div class="div_1"></div> <div class="div_1"></div> </div> </div>';
+            var testHtml = '<div id="main"> <span class="null"></span> <span class="span_1 span_2"></span> <span class="span_1"></span> <span class="span_2"></span> <br/> <div> <div class="div_1"></div> <div class="div_1"></div> <div class="div_1"></div> <div class="div_1"></div> </div> </div>';
             var container = document.createElement("div");
             container.innerHTML = testHtml;
             document.body.appendChild(container);
@@ -564,10 +564,14 @@ Aria.classDefinition({
             this.assertTruthy(div1Elements);
             this.assertEquals(4, div1Elements.length);
 
+            // class name parameter is coerced to a string by the browser: null becomes "null"
+            this.assertEquals(1, aria.utils.Dom.getElementsByClassName(container, null).length);
+
             this.assertEquals(0, aria.utils.Dom.getElementsByClassName(container, "CLASS_NAME_FAIL").length);
             this.assertEquals(0, aria.utils.Dom.getElementsByClassName(null, "CLASS_NAME_FAIL").length);
-            this.assertEquals(0, aria.utils.Dom.getElementsByClassName(container, null).length);
             this.assertEquals(0, aria.utils.Dom.getElementsByClassName(null, null).length);
+
+            document.body.removeChild(container);
         }
 
     }

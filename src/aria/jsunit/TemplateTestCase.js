@@ -108,7 +108,7 @@ Aria.classDefinition({
 
         this.$TestCase.$destructor.call(this);
     },
-    $dependencies : ["aria.utils.SynEvents", "aria.templates.RefreshManager", "aria.utils.Type"],
+    $dependencies : ["aria.utils.SynEvents", "aria.templates.RefreshManager", "aria.utils.Type", "aria.utils.Dom"],
     $statics : {
         IFRAME_LOAD_TEMPLATE : "Error loading template '%1' in iframe",
         IFRAME_LOADER : "Unable to load Aria Templates in iframe because: %1"
@@ -414,8 +414,8 @@ Aria.classDefinition({
          * Better use aria.utils.Dom.getElementsByClassName directly.
          * @deprecated
         */
-        getElementsByClassName : function (dom, classname) {
-            return aria.utils.Dom.getElementsByClassName(dom, classname);
+        getElementsByClassName : function (domElt, classname) {
+            return aria.utils.Dom.getElementsByClassName(domElt, classname);
         },
 
         /**

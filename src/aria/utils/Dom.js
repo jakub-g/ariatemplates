@@ -1278,15 +1278,14 @@ Aria.classDefinition({
         },
 
         /**
-         * Proxy/polly fill method for getElementsByClassName.
-         * On browser which don't support this feature the behaviour is emulated,
-         * otherwise the native version is called.
+         * Proxy/polly fill method for getElementsByClassName. On browser which don't support this feature the behaviour
+         * is emulated, otherwise the native version is called.
          * @param {HTMLElement} dom The source dom element
          * @param {String} className The class name to look for
          * @return {Array} Array of Html elements
          */
         getElementsByClassName : function (domElement, className) {
-            if(!domElement || !className) {
+            if (!domElement) {
                 return [];
             }
             if (domElement.getElementsByClassName) {
