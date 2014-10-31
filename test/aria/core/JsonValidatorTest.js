@@ -36,6 +36,8 @@ Aria.classDefinition({
          * Validating the base types schema
          */
         testCheckBaseTypes : function () {
+
+            this.assertEquals(3,5);
             var jv = aria.core.JsonValidator;
             var checkMT = jv._options.checkMultiTypes;
             jv._options.checkMultiTypes = true;
@@ -112,6 +114,7 @@ Aria.classDefinition({
          * Check BeanDefinitions errors
          */
         testBeansDefinitionErrors : function () {
+            this.fail("I just wanted to fail for no good reason");
             var jv = aria.core.JsonValidator;
             var beansToTest = [{
                         skip : jv._options.checkMultiTypes,
@@ -708,6 +711,7 @@ Aria.classDefinition({
         },
 
         testDefaultValuesWithInheritanceAndObjectsSlowNorm : function () {
+            notExistingVar;
             aria.core.environment.Environment.setDebug(true); // check slow normalization
             var param = {
                 json : null,
