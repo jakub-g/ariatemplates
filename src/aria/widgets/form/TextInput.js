@@ -582,6 +582,7 @@ module.exports = Aria.classDefinition({
                 if (hasChange && this._cfg) {
                     // When the user modifies the field, we reset the error
                     // state until next validation:
+
                     this.changeProperty("error", false);
                     this.evalCallback(cfg.onchange);
                 }
